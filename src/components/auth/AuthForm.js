@@ -4,12 +4,21 @@ import { Link } from 'react-router-dom';
 import palette from '../../lib/styles/palette';
 import Button from '../common/Button';
 
-function AuthForm() {
+const textMap = {
+  login: '로그인',
+  register: '회원가입',
+};
+
+function AuthForm({ type, form, onChange, onSubmit }) {
+  const text = textMap[type];
+
   return (
     <AuthFormBlcok>
-      <h3>로그인</h3>
-      <form>
+      <h3>{text}</h3>
+      <form onSubmit={onSubmit}>
         <StyledInput
+          onChange={onChange}
+          value={form.username}
           autoComplete="username"
           name="username"
           placeholder="아이디"
@@ -19,13 +28,29 @@ function AuthForm() {
           name="password"
           placeholder="비밀번호"
           type="password"
+          onChange={onChange}
+          value={form.password}
         />
+        {type === 'register' && (
+          <StyledInput
+            autoComplete="new-password"
+            name="passwordConfirm"
+            placeholder="비밀번호 확인"
+            type="password"
+            onChange={onChange}
+            value={form.passwordConfirm}
+          />
+        )}
         <ButtonWithMarginTop cyan fullWidth>
-          로그인
+          {text}
         </ButtonWithMarginTop>
       </form>
       <Footer>
-        <Link to="/register">회원가입</Link>
+        {type === 'login' ? (
+          <Link to="/register">회원가입</Link>
+        ) : (
+          <Link to="/login">로그인</Link>
+        )}
       </Footer>
     </AuthFormBlcok>
   );
