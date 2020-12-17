@@ -9,7 +9,7 @@ const textMap = {
   register: '회원가입',
 };
 
-function AuthForm({ type, form, onChange, onSubmit }) {
+function AuthForm({ type, form, onChange, onSubmit, error }) {
   const text = textMap[type];
 
   return (
@@ -41,6 +41,7 @@ function AuthForm({ type, form, onChange, onSubmit }) {
             value={form.passwordConfirm}
           />
         )}
+        {error && <ErrorMessage>{error}</ErrorMessage>}
         <ButtonWithMarginTop cyan fullWidth>
           {text}
         </ButtonWithMarginTop>
@@ -96,4 +97,11 @@ const Footer = styled.div`
       color: ${palette.gray[9]};
     }
   }
+`;
+
+const ErrorMessage = styled.div`
+  color: red;
+  text-align: center;
+  font-size: 0.875rem;
+  margin-top: 1rem;
 `;
