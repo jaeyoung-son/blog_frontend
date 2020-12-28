@@ -39,10 +39,6 @@ function LoginForm({ history }) {
   // 타 페이지 이동 후 다시 돌아오면 값을 클리어 하기 위함
 
   useEffect(() => {
-    dispatch(initializeForm('login'));
-  }, [dispatch]);
-
-  useEffect(() => {
     if (authError) {
       console.log('오류 발생');
       console.log(authError);
@@ -59,6 +55,11 @@ function LoginForm({ history }) {
   useEffect(() => {
     if (user) {
       history.push('/');
+      try {
+        localStorage.setItem('user', JSON.stringify(user));
+      } catch (e) {
+        console.log('localstorage is not working');
+      }
     }
   }, [history, user]);
 
