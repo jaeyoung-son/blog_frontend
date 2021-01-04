@@ -1,8 +1,8 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import palette from '../../lib/styles/palette';
 
-function TagBox() {
+function TagBox({ tags, onChangeTags }) {
   const [input, setInput] = useState('');
   const [localTags, setLocalTags] = useState([]);
 
@@ -10,16 +10,20 @@ function TagBox() {
     (tag) => {
       if (!tag) return;
       if (localTags.includes(tag)) return;
-      setLocalTags([...localTags, tag]);
+      const nextTags = [...localTags, tag];
+      setLocalTags(nextTags);
+      onChangeTags(nextTags);
     },
-    [localTags],
+    [localTags, onChangeTags],
   );
 
   const onRemove = useCallback(
     (tag) => {
-      setLocalTags(localTags.filter((t) => t !== tag));
+      const nextTags = localTags.filter((t) => t !== tag);
+      setLocalTags(nextTags);
+      onChangeTags(nextTags);
     },
-    [localTags],
+    [localTags, onChangeTags],
   );
 
   const onChange = useCallback((e) => {
@@ -34,6 +38,10 @@ function TagBox() {
     },
     [input, insertTag],
   );
+
+  useEffect(() => {
+    setLocalTags(tags);
+  }, [tags]);
 
   return (
     <TagBoxBlock>

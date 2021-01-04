@@ -5,7 +5,7 @@ import palette from '../../lib/styles/palette';
 import Responsive from '../common/Responsive';
 import styled from 'styled-components';
 
-function Editor() {
+function Editor({ title, body, onChangeField }) {
   const quillElement = useRef(null); // 퀼을 적용할 디브
   const quillInstance = useRef(null); // 퀼 인스턴스
 
@@ -23,11 +23,27 @@ function Editor() {
         ],
       },
     });
-  }, []);
+
+    // 퀼에 텍스트 체인지 이벤트 핸들러 등록
+    const quill = quillInstance.current;
+    quill.on('text-change', (delta, oldDelta, source) => {
+      if (source === 'user') {
+        onChangeField({ key: 'body', value: quill.root.innerHTML });
+      }
+    });
+  }, [onChangeField]);
+
+  const onChangeTitle = (e) => {
+    onChangeField({ key: 'title', value: e.target.value });
+  };
 
   return (
     <EditorBlock>
-      <TitleInput placeholder="제목을 입력하세요" />
+      <TitleInput
+        onChange={onChangeTitle}
+        value={title}
+        placeholder="제목을 입력하세요"
+      />
       <QuillWrapper>
         <div ref={quillElement} />
       </QuillWrapper>
