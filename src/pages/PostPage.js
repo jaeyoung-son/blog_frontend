@@ -1,12 +1,12 @@
 import React from 'react';
 import HeaderContainer from '../containers/common/HeaderContainer';
-import PostViwer from '../components/post/PostViewer';
+import PostViwerContainer from '../containers/post/PostViewerContainer';
 
 function PostPage() {
   return (
     <>
       <HeaderContainer />
-      <PostViwer />
+      <PostViwerContainer />
     </>
   );
 }
