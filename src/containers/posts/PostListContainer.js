@@ -7,7 +7,7 @@ import { listPosts } from '../../modules/posts';
 
 function PostListContainer({ location }) {
   const dispatch = useDispatch();
-  console.log(location, '포스트리스트 컨테이너의 로케이션');
+
   const { posts, error, loading, user } = useSelector(
     ({ posts, loading, user }) => ({
       posts: posts.posts,

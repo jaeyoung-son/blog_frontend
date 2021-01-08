@@ -5,7 +5,7 @@ import Responsive from '../common/Responsive';
 import SubInfo from '../common/SubInfo';
 import Tags from '../common/Tags';
 
-function PostViewer({ post, error, loading }) {
+function PostViewer({ post, error, loading, actionButtons }) {
   if (error) {
     if (error.response && error.response.status === 400) {
       return <PostViewerBlock>존재하지 않는 포스트입니다.</PostViewerBlock>;
@@ -30,6 +30,7 @@ function PostViewer({ post, error, loading }) {
           hasMarginTop
         />
         <Tags tags={tags} />
+        {actionButtons}
       </PostHead>
       <PostContent dangerouslySetInnerHTML={{ __html: body }} />
     </PostViewerBlock>
