@@ -5,7 +5,7 @@ import Responsive from '../common/Responsive';
 import SubInfo from '../common/SubInfo';
 import Tags from '../common/Tags';
 
-function PostViewer({ post, error, loading, actionButtons }) {
+function PostViewer({ post, error, loading, actionButtons, ownPost }) {
   if (error) {
     if (error.response && error.response.status === 400) {
       return <PostViewerBlock>존재하지 않는 포스트입니다.</PostViewerBlock>;
@@ -20,6 +20,8 @@ function PostViewer({ post, error, loading, actionButtons }) {
 
   const { title, body, user, publishedDate, tags } = post;
 
+  console.log(ownPost, '자식에서 오운포스트');
+
   return (
     <PostViewerBlock>
       <PostHead>
@@ -30,7 +32,7 @@ function PostViewer({ post, error, loading, actionButtons }) {
           hasMarginTop
         />
         <Tags tags={tags} />
-        {actionButtons}
+        {ownPost && actionButtons}
       </PostHead>
       <PostContent dangerouslySetInnerHTML={{ __html: body }} />
     </PostViewerBlock>

@@ -2,11 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 import Button from '../common/Button';
 
-function WriteActionButtons({ onCancel, onPublish }) {
+function WriteActionButtons({ onCancel, onPublish, isEdit }) {
   return (
     <WriteActionButtonBlock>
       <StyledButton cyan onClick={onPublish}>
-        포스트 등록
+        포스트 {isEdit ? '수정' : '등록'}
       </StyledButton>
       <StyledButton onClick={onCancel}>취소</StyledButton>
     </WriteActionButtonBlock>

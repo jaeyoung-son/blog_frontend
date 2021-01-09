@@ -33,6 +33,15 @@ function Editor({ title, body, onChangeField }) {
     });
   }, [onChangeField]);
 
+  const mounted = useRef(false);
+  useEffect(() => {
+    if (mounted.current) return;
+    mounted.current = true;
+    quillInstance.current.root.innerHTML = body;
+    // eslint disable 해서 의존성배열을 빈배열로 두거나 위처럼 레프값으로 초기마운트 잡거나
+    // useEffect 의존성 배열은 유즈이펙트 안에서 사용하는 모든 외부값을 의존성에 넣는것을 권장
+  }, [body]);
+
   const onChangeTitle = (e) => {
     onChangeField({ key: 'title', value: e.target.value });
   };

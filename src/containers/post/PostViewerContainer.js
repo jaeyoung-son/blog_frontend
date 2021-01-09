@@ -5,6 +5,7 @@ import { readPost, unloadPost } from '../../modules/post';
 import PostViwer from '../../components/post/PostViewer';
 import PostActionButtons from '../../components/post/PostActionButtons';
 import { setOriginalPost } from '../../modules/write';
+import { removePost } from '../../lib/api/post';
 
 function PostViwerContainer({ match, history }) {
   const { postId } = match.params;
@@ -31,15 +32,22 @@ function PostViwerContainer({ match, history }) {
     history.push('/write');
   };
 
-  console.log(user, post, '포스트뷰어 컨테이너');
+  const onRemove = async () => {
+    try {
+      await removePost(postId);
+      history.push('/');
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   return (
     <PostViwer
       post={post}
       loading={loading}
       error={error}
-      actionButtons={<PostActionButtons onEdit={onEdit} />}
-      ownPost={user && user.id === post && post.id}
+      actionButtons={<PostActionButtons onEdit={onEdit} onRemove={onRemove} />}
+      ownPost={(user && user._id) === (post && post.user._id)}
     />
   );
 }
