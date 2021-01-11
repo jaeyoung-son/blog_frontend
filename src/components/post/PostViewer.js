@@ -4,6 +4,7 @@ import palette from '../../lib/styles/palette';
 import Responsive from '../common/Responsive';
 import SubInfo from '../common/SubInfo';
 import Tags from '../common/Tags';
+import { Helmet } from 'react-helmet-async';
 
 function PostViewer({ post, error, loading, actionButtons, ownPost }) {
   if (error) {
@@ -24,6 +25,9 @@ function PostViewer({ post, error, loading, actionButtons, ownPost }) {
 
   return (
     <PostViewerBlock>
+      <Helmet>
+        <title>{title} - 재영블로그</title>
+      </Helmet>
       <PostHead>
         <h1>{title}</h1>
         <SubInfo
